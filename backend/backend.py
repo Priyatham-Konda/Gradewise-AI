@@ -14,6 +14,7 @@ def analysis(file, reference):
     if len(file) == 1 and file[0].type == "application/x-zip-compressed":
         zip_file_path = file[0]
         # Define the folder where you want to extract the PDF files
+        print("extracted_folder")
         output_folder = "backend/extracted_folder"
 
         # Ensure the output folder exists, if not, create it
@@ -53,4 +54,5 @@ def analysis(file, reference):
 
         # folder_path = 'C:\\Users\\God\\OneDrive\\Documents\\file extraction'
         # print('backend/extracted_folder/'+file[0].name[:-4])
-        main('backend/extracted_folder/'+file[0].name[:-4])
+        print(file)
+        main('backend/extracted_folder/')

@@ -7,19 +7,11 @@ $ pip install google-generativeai
 import google.generativeai as genai
 import csv
 import re
-import streamlit as st
-import os
-
-GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-os.environ["API"] = GEMINI_API_KEY
-
 with open('responses.csv', 'w', newline='',  encoding="utf-8") as file:
     writer = csv.writer(file)
     writer.writerow(["Roll Number", "Rating", "Feedback"])
 
-
-api_key = GEMINI_API_KEY
-genai.configure(api_key=api_key)
+genai.configure(api_key="AIzaSyCVDs1Bfa1Uxgwh0ONo88exasUrvOy2jMs")
 
 # Set up the model
 generation_config = {
