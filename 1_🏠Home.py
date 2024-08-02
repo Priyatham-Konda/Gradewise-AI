@@ -1,6 +1,12 @@
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
 import backend
+import streamlit_extras
+
+__import__('streamlit_extras')
+import sys
+
+sys.modules['streamlit_extras'] = sys.modules.pop('streamlit_extras')
 
 st.set_page_config(
     page_title="Main Page",
