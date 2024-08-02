@@ -54,6 +54,7 @@ submit = st.button("Submit")
 if submit:
     # import time
 #  import streamlit as st
+    print("Going to gemini")
 
     with st.spinner('Loading...'):
         backend.analysis(uploaded_pdf,refer_txt)
