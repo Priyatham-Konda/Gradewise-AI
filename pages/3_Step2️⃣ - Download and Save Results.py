@@ -25,8 +25,8 @@ for uploaded_file in uploaded_csv:
     # Iterate through each row in the CSV file
     for row in csv_reader:
         # Extract roll number and email from the row
-        roll_no = row[1]  # Assuming Roll No is the second column (index 1)
-        email = row[2]    # Assuming Email is the third column (index 2)
+        roll_no = row[0]  # Assuming Roll No is the second column (index 1)
+        email = row[1]    # Assuming Email is the third column (index 2)
 
         # Add roll number and email to the dictionary
         roll_email_dict[roll_no] = email
