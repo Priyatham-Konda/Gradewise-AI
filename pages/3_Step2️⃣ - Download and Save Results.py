@@ -65,9 +65,9 @@ st.title('Rating Distribution Analysis')
 # Load data
 df = load_data('responses.csv')  # Change 'rating.csv' to the name of your CSV fil
 # Create a DataFrame to store the counts of each rating
-ratings_counts = pd.DataFrame({'Rating': range(1, 10), 'Count': 0})
+ratings_counts = pd.DataFrame({'Rating': range(1, 11), 'Count': 0})
 # Count occurrences of each rating from the loaded data
-for rating in range(0, 10):
+for rating in range(0, 11):
     ratings_counts.loc[rating - 1, 'Count'] = (df['Rating'] == rating).sum()
 # Display bar chart
 st.write('### Distribution of Ratings')
