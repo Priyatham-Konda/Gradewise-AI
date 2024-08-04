@@ -11,7 +11,7 @@ with open('responses.csv', 'w', newline='',  encoding="utf-8") as file:
     writer = csv.writer(file)
     writer.writerow(["Roll Number", "Rating", "Feedback"])
 
-genai.configure(api_key="AIzaSyCVDs1Bfa1Uxgwh0ONo88exasUrvOy2jMs")
+genai.configure(api_key="AIzaSyBmjFrqu-VoU1a6qYsYazbpET64exUCZAM")
 
 # Set up the model
 generation_config = {
@@ -40,7 +40,7 @@ safety_settings = [
   },
 ]
 
-model = genai.GenerativeModel(model_name="gemini-1.0-pro",
+model = genai.GenerativeModel(model_name="gemini-1.5-pro",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
