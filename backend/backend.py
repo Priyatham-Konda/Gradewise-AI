@@ -5,7 +5,7 @@ import os
 import shutil
 import os
 import PyPDF2
-from backend import gemini
+from . import gemini
 
 
 def analysis(file, reference):

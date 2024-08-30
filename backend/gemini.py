@@ -11,7 +11,7 @@ with open('responses.csv', 'w', newline='',  encoding="utf-8") as file:
     writer = csv.writer(file)
     writer.writerow(["Roll Number", "Rating", "Feedback"])
 
-genai.configure(api_key="AIzaSyBjBgThgVFsX93ZZWAnlvn4NCx1t9-szzU")
+genai.configure(api_key="GEMINI API KEY")
 
 # Set up the model
 generation_config = {
@@ -40,7 +40,7 @@ safety_settings = [
   },
 ]
 
-model = genai.GenerativeModel(model_name="gemini-1.5-pro",
+model = genai.GenerativeModel(model_name="gemini-1.5-flash",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
@@ -50,6 +50,7 @@ model = genai.GenerativeModel(model_name="gemini-1.5-pro",
 # print(convo.last.text)
 def prompt(essay, rollno, reference):
     # start_time = time.time()
+    print("Prompting model...")
     messages_chatgpt=[{"role": "system", "content": "you are an essay evaluator. You need to give rating from 1 to 10 under the rating heading and then give feedback and suggestions for improvement as points line by line to students clearly under the feedback. These are the reference essay give rating based on how close the essay is to the reference essay . If the essay is not at all related to reference essay give 0  and give 10 if all the points from reference essay are covered in the essay. Give feedback points. These are the reference essay "+reference+"  This is the actual essay to be rated and reviewed "+essay},
                   {"role": "user", "content": essay} ]
     def transform_to_gemini(messages_chatgpt):
