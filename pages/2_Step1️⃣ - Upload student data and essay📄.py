@@ -44,7 +44,7 @@ for up_pdf in uploaded_pdf:
 import streamlit as st
 
 refer_txt = st.text_area(
-    "Reference : ",
+    "Question paper with reference : ",
     )
 
 # st.write(f'You wrote {len(txt)} characters.')

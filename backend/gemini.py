@@ -11,7 +11,7 @@ with open('responses.csv', 'w', newline='',  encoding="utf-8") as file:
     writer = csv.writer(file)
     writer.writerow(["Roll Number", "Rating", "Feedback"])
 
-genai.configure(api_key="GEMINI API KEY")
+genai.configure(api_key="")
 
 # Set up the model
 generation_config = {
@@ -51,8 +51,12 @@ model = genai.GenerativeModel(model_name="gemini-1.5-flash",
 def prompt(essay, rollno, reference):
     # start_time = time.time()
     print("Prompting model...")
-    messages_chatgpt=[{"role": "system", "content": "you are an essay evaluator. You need to give rating from 1 to 10 under the rating heading and then give feedback and suggestions for improvement as points line by line to students clearly under the feedback. These are the reference essay give rating based on how close the essay is to the reference essay . If the essay is not at all related to reference essay give 0  and give 10 if all the points from reference essay are covered in the essay. Give feedback points. These are the reference essay "+reference+"  This is the actual essay to be rated and reviewed "+essay},
-                  {"role": "user", "content": essay} ]
+    messages_chatgpt=[{"role": "system", "content": """You are an answer script evaluator. Your task is to rate the student's answers on a scale from 1 to 10 under the "Rating" heading. The rating should be based on how closely the student's answers align with the reference answer key provided. If the student's answers are not at all related to the reference answer key, give a score of 0. Award a score of 10 if all the key points from the reference answer are covered in the student's responses.
+After providing the rating, offer "Feedback and Suggestions for Improvement" in clear, concise points, guiding the student on how to enhance their answers. Ensure that the feedback is constructive and directly related to the content provided in the reference answer key.
+Reference Answer Key: """ + reference + """, Student's Answer Script: """ + essay + """
+"""
+},
+{"role": "user", "content": essay} ]
     def transform_to_gemini(messages_chatgpt):
         messages_gemini = []
         system_promt = ''
