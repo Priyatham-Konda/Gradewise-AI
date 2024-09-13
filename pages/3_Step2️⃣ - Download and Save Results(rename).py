@@ -48,7 +48,7 @@ with open("responses.csv", "rb") as file:
     btn = st.download_button(
             label="Download Results",
             data=file,
-            file_name="responses.csv",
+            file_name="backend/responses.csv",
             mime="csv"
           )
 
@@ -78,7 +78,7 @@ st.bar_chart(ratings_counts.set_index('Rating'))
 # Email forwarding
 stud_len = len(roll_email_dict)
 saved_time = (4*stud_len)/60 - (stud_len)/60
-st.markdown(f"# WOW! You just have saved {saved_time} hours of manual work!🎉")
+# st.markdown(f"# WOW! You just have saved {saved_time} hours of manual work!🎉")
 
 st.markdown('### Send feedback to students based on the results.')
 send = st.button("Send Feedback through Email")

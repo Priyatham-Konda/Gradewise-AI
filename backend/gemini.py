@@ -7,9 +7,6 @@ $ pip install google-generativeai
 import google.generativeai as genai
 import csv
 import re
-with open('responses.csv', 'w', newline='',  encoding="utf-8") as file:
-    writer = csv.writer(file)
-    writer.writerow(["Roll Number", "Rating", "Feedback"])
 
 genai.configure(api_key="")
 
@@ -51,29 +48,37 @@ model = genai.GenerativeModel(model_name="gemini-1.5-flash",
 def prompt(essay, rollno, reference):
     # start_time = time.time()
     print("Prompting model...")
-    messages_chatgpt=[{"role": "system", "content": """You are an answer script evaluator. Your task is to rate the student's answers on a scale from 1 to 10 under the "Rating" heading. The rating should be based on how closely the student's answers align with the reference answer key provided. If the student's answers are not at all related to the reference answer key, give a score of 0. Award a score of 10 if all the key points from the reference answer are covered in the student's responses.
-After providing the rating, offer "Feedback and Suggestions for Improvement" in clear, concise points, guiding the student on how to enhance their answers. Ensure that the feedback is constructive and directly related to the content provided in the reference answer key.
+    messages_chatgpt=[{"role": "system", "content": """You are an answer script evaluator. Your task is
+                        to rate the student's answers on a scale from 1 to 10 under the "Rating" heading. 
+                       The rating should be based on how closely the student's answers align with the reference 
+                       answer key provided. If the student's answers are not at all related to the reference answer 
+                       key, give a score of 0. Award a score of 10 if all the key points from the reference answer 
+                       are covered in the student's responses. After providing the rating, offer 
+                       "Feedback and Suggestions for Improvement" in clear, concise points, guiding the student 
+                       on how to enhance their answers. Ensure that the feedback is constructive and directly 
+                       related to the content provided in the reference answer key. Also, donot mention about
+                       question paper's reference key in the feedback. Check the matching percentage of the student's
+                       answers to reference answers and provide feedback accordingly.
 Reference Answer Key: """ + reference + """, Student's Answer Script: """ + essay + """
 """
 },
 {"role": "user", "content": essay} ]
     def transform_to_gemini(messages_chatgpt):
-        messages_gemini = []
-        system_promt = ''
-        for message in messages_chatgpt:
-            if message['role'] == 'system':
-                system_promt = message['content']
-            elif message['role'] == 'user':
-                messages_gemini.append({'role': 'user', 'parts': [message['content']]})
-            elif message['role'] == 'assistant':
-                messages_gemini.append({'role': 'model', 'parts': [message['content']]})
-        if system_promt:
-            messages_gemini[0]['parts'].insert(0, f"*{system_promt}*")
-
-        return messages_gemini
+      messages_gemini = []
+      system_promt = ''
+      for message in messages_chatgpt:
+          if message['role'] == 'system':
+              system_promt = message['content']
+          elif message['role'] == 'user':
+              messages_gemini.append({'role': 'user', 'parts': [message['content']]})
+          elif message['role'] == 'assistant':
+              messages_gemini.append({'role': 'model', 'parts': [message['content']]})
+      if system_promt:
+          messages_gemini[0]['parts'].insert(0, f"*{system_promt}*")  
+      return messages_gemini
     messages = transform_to_gemini(messages_chatgpt)
     response = model.generate_content(messages)
-    print(response.text)
+    # print(response.text)
     # response_text = response.text
     response_text = re.sub(r'\*', '', response.text)
 
@@ -82,22 +87,26 @@ Reference Answer Key: """ + reference + """, Student's Answer Script: """ + essa
     rating_index = response_text.find("Rating: ") + len("Rating: ")
     rating_end_index = response_text.find("\n", rating_index)
     rating_str = response_text[rating_index:rating_end_index]
+
     # Extract numerator of fraction rating if exists
-    # if '/' in rating_str:
-    #     rating = rating_str.split('/')[0]
-    # else:
-    #     rating = rating_str
-    # extracted_digits = [re.match(r'^\d+', string).group() if re.match(r'^\d+', string) else None for string in sample_strings]
     rating = re.match(r'^\d+', rating_str).group()
     if not rating:
         rating = 0
+
     # Find feedback content
     feedback_start_index = response_text.find(":", rating_end_index) + 1
     feedback_content = response_text[feedback_start_index:].strip()
 
     print("Rating:", rating)
-    # print("Feedback:")
+    print("Feedback:")
     print(feedback_content)
-    with open('responses.csv', 'a', newline='',  encoding="utf-8") as file:
-        writer = csv.writer(file)
-        writer.writerow([rollno, rating, feedback_content])
+
+    with open('backend/responses.csv', 'a', newline='', encoding="utf-8") as file:
+      writer = csv.writer(file)
+      # print(rollno, rating, feedback_content)
+      writer.writerow([rollno, rating, feedback_content])
+
+
+
+
+    
