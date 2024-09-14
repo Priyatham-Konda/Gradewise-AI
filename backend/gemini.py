@@ -10,6 +10,11 @@ import re
 
 genai.configure(api_key="")
 
+with open('backend/responses.csv', 'w', newline='',  encoding="utf-8") as file:
+    writer = csv.writer(file)
+    writer.writerow(["Roll Number", "Rating", "Feedback"])
+
+
 # Set up the model
 generation_config = {
   "temperature": 0.9,

@@ -44,7 +44,7 @@ for uploaded_file in uploaded_csv:
 
 st.markdown("### You can download the results as a CSV file.")
 
-with open("responses.csv", "rb") as file:
+with open("backend/responses.csv", "rb") as file:
     btn = st.download_button(
             label="Download Results",
             data=file,
@@ -63,7 +63,7 @@ def load_data(csv_file):
 # Title
 st.title('Rating Distribution Analysis')
 # Load data
-df = load_data('responses.csv')  # Change 'rating.csv' to the name of your CSV fil
+df = load_data('backend/responses.csv')  # Change 'rating.csv' to the name of your CSV fil
 # Create a DataFrame to store the counts of each rating
 ratings_counts = pd.DataFrame({'Rating': range(1, 11), 'Count': 0})
 # Count occurrences of each rating from the loaded data
@@ -88,7 +88,7 @@ if send:
   subject = "Your Essay feedback"
 
   responses = {}
-  with open(r'responses.csv', 'r') as responses_file:
+  with open(r'backend/responses.csv', 'r') as responses_file:
       response_reader = csv.DictReader(responses_file)
       for row in response_reader:
           responses[row['Roll Number']] = {
