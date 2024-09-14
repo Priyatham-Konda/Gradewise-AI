@@ -24,4 +24,4 @@ if submit:
         backend.analysis(uploaded_zip, ques_key)
     flag = 1
     st.success('Done!')
-    switch_page("Step2️⃣ - download and save results")
+    switch_page("Step2️⃣ - Download and Save Results")

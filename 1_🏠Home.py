@@ -48,4 +48,4 @@ With Gradewise AI, educators can optimize their time and resources while providi
 st.markdown("## Lets get started!")
 page_1 = st.button("Go to step 1 - Upload Student data")
 if page_1:
-    switch_page("step1️⃣ - upload student data and essay📄")
+    switch_page("step1️⃣ - Upload student data and essay📄")
