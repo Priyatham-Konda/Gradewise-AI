@@ -1,7 +1,4 @@
 import streamlit as st
-# import uploaded_pdf from 2_Step1️⃣ - Upload student data and essay📄.py
-# import 2_Step1️⃣ - Upload student data and essay📄
-from backend import backend
 import pandas as pd
 import numpy as np
 import csv
@@ -9,114 +6,113 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 
-
+# Dictionary to store roll numbers and emails
 roll_email_dict = {}
+
+# Section to upload CSV containing roll numbers and emails
 st.markdown("### Upload Student Roll Number and their respective email in CSV file")
-uploaded_csv = st.file_uploader("Choose a CSV file", accept_multiple_files=True)
-for uploaded_file in uploaded_csv:
-    bytes_data = uploaded_file.read().decode("utf-8")  # Decode bytes to string
-    st.write("filename:", uploaded_file.name)
+uploaded_csv = st.file_uploader("Choose a CSV file", accept_multiple_files=False)
+
+# Process the uploaded CSV file
+if uploaded_csv:
+    bytes_data = uploaded_csv.read().decode("utf-8")  # Decode bytes to string
+    st.write("Filename:", uploaded_csv.name)
+    
     # Parse CSV data
     csv_reader = csv.reader(bytes_data.splitlines())
+    next(csv_reader)  # Skip header row
 
-# Skip the header row
-    next(csv_reader)
-
-    # Iterate through each row in the CSV file
+    # Store roll number and email in dictionary
     for row in csv_reader:
-        # Extract roll number and email from the row
         roll_no = row[1]  # Assuming Roll No is the second column (index 1)
         email = row[2]    # Assuming Email is the third column (index 2)
-
-        # Add roll number and email to the dictionary
         roll_email_dict[roll_no] = email
 
-    # Print the dictionary
-        # print("Roll Number and Email Dictionary:")
-        # for roll_no, email in roll_email_dict.items():
-            # print(f"Roll No: {roll_no}, Email: {email}")
+# Display the dictionary
+st.write("Roll Number and Email Dictionary:")
+st.write(roll_email_dict)
 
-# st.markdown("## Great!🙌 The essays have been evaluated successfully.")
-# st.markdown("### Here are the results:")
-
-# df = pd.DataFrame([['sst', '100'],['can','500']], columns=['model','0'])
-# st.bar_chart(df)  # Replace ?? with the appropriate argument(s) for the bar_chart function
-
+# Section to download the results CSV file
 st.markdown("### You can download the results as a CSV file.")
-
 with open("backend/responses.csv", "rb") as file:
     btn = st.download_button(
             label="Download Results",
             data=file,
-            file_name="backend/responses.csv",
-            mime="csv"
+            file_name="responses.csv",
+            mime="text/csv"
           )
-
 
 # Function to load data
 def load_data(csv_file):
     df = pd.read_csv(csv_file)
     return df
 
-# Main function
-
-# Title
+# Title for rating distribution analysis
 st.title('Rating Distribution Analysis')
-# Load data
-df = load_data('backend/responses.csv')  # Change 'rating.csv' to the name of your CSV fil
-# Create a DataFrame to store the counts of each rating
+
+# Load responses CSV data
+df = load_data('backend/responses.csv')
+
+# Count occurrences of each rating
 ratings_counts = pd.DataFrame({'Rating': range(1, 11), 'Count': 0})
-# Count occurrences of each rating from the loaded data
-for rating in range(0, 11):
+for rating in range(1, 11):
     ratings_counts.loc[rating - 1, 'Count'] = (df['Rating'] == rating).sum()
+
 # Display bar chart
 st.write('### Distribution of Ratings')
 st.bar_chart(ratings_counts.set_index('Rating'))
 
-
-
-# Email forwarding
+# Email forwarding section
 stud_len = len(roll_email_dict)
-saved_time = (4*stud_len)/60 - (stud_len)/60
-# st.markdown(f"# WOW! You just have saved {saved_time} hours of manual work!🎉")
+saved_time = (4 * stud_len) / 60 - stud_len / 60
+st.markdown(f"### WOW! You just saved {saved_time:.2f} hours of manual work!🎉")
 
 st.markdown('### Send feedback to students based on the results.')
 send = st.button("Send Feedback through Email")
-if send:
-  email_sender = "gradewiseai@gmail.com"
-  email_password = "aefk ncoz kajz abtc"
-  subject = "Your Essay feedback"
 
-  responses = {}
-  with open(r'backend/responses.csv', 'r') as responses_file:
-      response_reader = csv.DictReader(responses_file)
-      for row in response_reader:
-          responses[row['Roll Number']] = {
-              'rating': row['Rating'],
-              'feedback': row['Feedback']
-          }
-  # stud_upload = backend.stud_data
-  print(roll_email_dict)
-  for roll_number, email_receiver in roll_email_dict.items():
-      # roll_number = student_row['Roll Number']
-      # email_receiver = student_row['Email']
-      # name_receiver = student_row['Name']
-      roll_number = roll_number+".pdf"
-      # print(roll_number)
-      if roll_number in responses:
-          rating = responses[roll_number]['rating']
-          feedback = responses[roll_number]['feedback']
-          body = f"The evaluation of your essay has been completed.\nYour Rating for the essay is: {rating}/10\nFeedback: {feedback}\n\nThank you!\nNote: This is an automated email. Please do not reply."
-      else:
-          body = "There hasn't been any submission of essays so rating is provided as 0."
-      em = EmailMessage()
-      em["From"] = email_sender
-      em["To"] = email_receiver
-      em["Subject"] = subject
-      em.set_content(body)
-      context = ssl.create_default_context()
-      with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-          smtp.login(email_sender, email_password)
-          smtp.sendmail(email_sender, email_receiver, em.as_string())
-  print("Emails sent successfully to all students.")
-  st.success('Emails sent successfully to all students.', icon="✅")
+if send:
+    email_sender = "gradewiseai@gmail.com"
+    email_password = "aefk ncoz kajz abtc"
+    subject = "Your Essay feedback"
+
+    # Load responses from the CSV file
+    responses = {}
+    with open('backend/responses.csv', 'r') as responses_file:
+        response_reader = csv.DictReader(responses_file)
+        for row in response_reader:
+            responses[row['Roll Number']] = {
+                'rating': row['Rating'],
+                'feedback': row['Feedback']
+            }
+
+    # Sending feedback emails
+    for roll_number, email_receiver in roll_email_dict.items():
+        if roll_number in responses:
+            rating = responses[roll_number]['rating']
+            feedback = responses[roll_number]['feedback']
+            body = (
+                f"The evaluation of your essay has been completed.\n"
+                f"Your Rating for the essay is: {rating}/10\n"
+                f"Feedback: {feedback}\n\n"
+                f"Thank you!\nNote: This is an automated email. Please do not reply."
+            )
+        else:
+            body = (
+                "There hasn't been any submission of essays, so the rating is provided as 0."
+            )
+
+        # Prepare email message
+        em = EmailMessage()
+        em["From"] = email_sender
+        em["To"] = email_receiver
+        em["Subject"] = subject
+        em.set_content(body)
+
+        # Send email
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            smtp.login(email_sender, email_password)
+            smtp.sendmail(email_sender, email_receiver, em.as_string())
+
+    st.success('Emails sent successfully to all students.', icon="✅")
+ 

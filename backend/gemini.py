@@ -8,7 +8,7 @@ import google.generativeai as genai
 import csv
 import re
 
-genai.configure(api_key="")
+genai.configure(api_key="GEMINI_API_KEY")
 
 with open('backend/responses.csv', 'w', newline='',  encoding="utf-8") as file:
     writer = csv.writer(file)
