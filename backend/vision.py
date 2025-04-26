@@ -6,7 +6,7 @@ import time
 
 
 # image to text API authentication
-subscription_key_imagetotext = "AZURE_VISION_API_KEY"
+subscription_key_imagetotext = "aa3af11c642e44ce95004c2468bd22e4"
 endpoint_imagetotext = "https://gradewise-ai-sih.cognitiveservices.azure.com/"
 computervision_client = ComputerVisionClient(
     endpoint_imagetotext, CognitiveServicesCredentials(subscription_key_imagetotext))

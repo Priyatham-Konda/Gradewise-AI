@@ -2,3 +2,6 @@
 backend/__pycache__
 your-image.tar
 env
+writing.jpg
+backend/extracted_folder
+backend/responses.csv
