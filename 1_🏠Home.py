@@ -27,22 +27,22 @@ st.markdown("<h1 class='big-font'>Welcome to Gradewise.ai! 🤖</h1>", unsafe_al
 
 st.markdown(
     """
-    Traditional essay evaluation poses significant challenges for both teachers and students. Teachers often find themselves burdened with the task of manually reviewing numerous essays, leading to time constraints and potential delays in providing feedback. Consequently, students may not receive timely guidance on their writing, impacting their learning and academic performance.
+    Traditional answer script evaluation poses significant challenges for educators, especially when dealing with a large volume of scripts. Teachers often face time constraints and delays in providing feedback, which can hinder students' learning and academic progress.
 
-At Gradewise AI, we recognize the need for a more efficient and personalized approach to essay evaluation. Our platform revolutionizes the grading process by leveraging artificial intelligence to automate and enhance feedback delivery. Here's how it works:
+At Gradewise AI, we aim to streamline this process by leveraging artificial intelligence to evaluate student answer scripts efficiently and accurately. Here's how our platform works:
 
-Streamlined Submission Process: Users can easily upload a zip file containing PDFs of student essays. This eliminates the need for manual entry and ensures all submissions are organized in one place.
+Bulk Answer Script Processing: Teachers can upload a zip file containing scanned PDFs of student answer scripts. This simplifies the submission process and ensures all scripts are organized in one place.
 
-Automated Text Extraction: Our system extracts the text from each essay, making it accessible for analysis by our AI model. This step saves valuable time for teachers and ensures accurate evaluation of student work.
+Automated Text Extraction: Our system extracts the text from each answer script, making it ready for analysis by our AI model. This eliminates the need for manual data entry and ensures accuracy.
 
-AI-Powered Evaluation: Using advanced natural language processing algorithms, our AI model thoroughly analyzes each essay. It assesses various aspects such as grammar, coherence, argumentation, and vocabulary usage to provide comprehensive feedback.
+AI-Powered Evaluation: Using advanced natural language processing, our AI model evaluates student answers against the provided question paper and the teacher's answer key. It assesses the correctness, relevance, and completeness of each response.
 
-Personalized Feedback: Gradewise AI generates detailed feedback tailored to each student's essay. This includes suggestions for improvement, areas of strength, and specific examples to illustrate key points. By addressing individual needs, students receive targeted guidance to enhance their writing skills.
+Personalized Feedback: Gradewise AI generates detailed feedback for each student, highlighting areas of improvement and strengths. This targeted guidance helps students enhance their understanding and performance.
 
 #### Grading and Reporting
-- In addition to feedback, our platform assigns grades based on predefined criteria or customizable rubrics. Teachers can easily review and track student progress through an intuitive dashboard, which displays overall performance metrics and trends.
+- The platform assigns grades based on predefined criteria or customizable rubrics. Teachers can review and track student progress through an intuitive dashboard, which provides insights into overall performance and trends.
 
-With Gradewise AI, educators can optimize their time and resources while providing valuable support to students. By automating essay evaluation and delivering personalized feedback, we empower educators to focus on facilitating learning and fostering academic growth. Our platform not only enhances the teaching experience but also enriches the learning journey for students, ultimately driving improved outcomes and success.
+With Gradewise AI, educators can save valuable time while ensuring accurate and consistent evaluation of student answer scripts. By automating the grading process and delivering personalized feedback, we empower teachers to focus on fostering learning and academic growth, ultimately driving better outcomes for students.
 """
 )
 st.markdown("## Lets get started!")
